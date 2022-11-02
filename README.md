@@ -2,7 +2,7 @@
 	<img src="https://i.imgur.com/GNWwMFb.png" width="600px">
 </p>
 
-#### Version 2.1.0
+#### Version 2.1.0+
 #### Coded By R3D#@0R_2H1N A.K.A Tuhinshubhra
 #### Maintained By Zaeem20 A.K.A Zaeem
 All in one tool for **Information Gathering** and **Vulnerability Scanning**
@@ -52,6 +52,7 @@ All in one tool for **Information Gathering** and **Vulnerability Scanning**
     - Version 1.1.0 [15-06-2017]
     - Version 2.0.0 [11-08-2017]
 	- Version 2.1.0 [23-05-2022]
+	- Version 2.1.3 [02-11-2022]
 
 # Changelog:
 - Version 1.0.0
@@ -60,7 +61,7 @@ All in one tool for **Information Gathering** and **Vulnerability Scanning**
     - Updated The `fix` command
 - Version 2.0.0
 	- Separated all scans so that you are served the amount of information you need
-	- `Sub-Domain Scanner` improved
+	- `Sub-Domain Scanner` Improved
 	- `fix` command improved
 	- `Web Server Detection` Improved
 	- `CMS Detection` Improved
@@ -77,6 +78,9 @@ All in one tool for **Information Gathering** and **Vulnerability Scanning**
 	- `NMAP and WHOIS` Fixed
 	- `RED HAWK Banner` Updated
 	- `BUGS and Error` Fixed
+- Version 2.1.3
+	- `Bugs Fixed (Nmap, Whois, WAF)` Fixed 
+	- `Changes in API` Improved	
 
 # Installation:
 1. Run The Tool and Type `fix` This will Install All Required Modules.
