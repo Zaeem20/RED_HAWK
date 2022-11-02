@@ -203,7 +203,7 @@ askscan:
             echo $blue . $bold . "[i] Scanning Site:\e[92m $ipsl" . "$ip \n";
             echo $bold . $yellow . "[S] Scan Type : WHOIS Lookup" . $cln;
             echo $bold . $lblue . "\n[~] Whois Lookup Result: \n\n" . $cln;
-            $urlwhois    = "http://api.webeye.ml/whois/?q=" . $lwwww;
+            $urlwhois    = "http://webeye.deta.dev/whois/?q=" . $lwwww;
             $resultwhois = readcontents($urlwhois);
             echo $bold . $fgreen . $resultwhois;
             echo "\n\n";
@@ -322,7 +322,7 @@ askscan:
             echo $blue . $bold . "[i] Scanning Site:\e[92m $ipsl" . "$ip \n";
             echo $bold . $yellow . "[S] Scan Type : Nmap Port Scan" . $cln;
             echo $bold . $lblue . "\n[~] Port Scan Result: \n\n" . $cln;
-            $urlnmap    = "https://api.webeye.ml/nmap/?q=" . $lwwww;
+            $urlnmap    = "https://webeye.deta.dev/nmap/?q=" . $lwwww;
             $resultnmap = readcontents($urlnmap);
             echo $bold . $fgreen . $resultnmap;
             echo "\n\n";
@@ -858,7 +858,7 @@ askscan:
             echo "\n\n$bold" . $lblue . "W H O I S   L O O K U P\n";
             echo "========================";
             echo "\n\n$cln";
-            $urlwhois    = "https://api.webeye.ml/whois/?q=" . $lwwww;
+            $urlwhois    = "https://webeye.deta.dev/whois/?q=" . $lwwww;
             $resultwhois = file_get_contents($urlwhois);
             echo "\t";
             echo $resultwhois;
@@ -901,7 +901,7 @@ askscan:
             echo "\n\n$bold" . $lblue . "N M A P   P O R T   S C A N\n";
             echo "============================";
             echo "\n\n$cln";
-            $urlnmap    = "http://api.webeye.ml/nmap/?q=" . $lwwww;
+            $urlnmap    = "http://webeye.deta.dev/nmap/?q=" . $lwwww;
             $resultnmap = file_get_contents($urlnmap);
             echo $resultnmap;
             echo "\n";

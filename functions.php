@@ -34,7 +34,7 @@ function WEBserver($urlws){
 
 
 function WAF_Detect($domains){
-  $response = json_decode(file_get_contents('http://api.webeye.ml/waf/?q=' . $domains), true);
+  $response = json_decode(file_get_contents('http://webeye.deta.dev/waf/?q=' . $domains), true);
   if ($response['waf']){
     $arr = $response["manufacturer"];
     if (is_array($arr)){
