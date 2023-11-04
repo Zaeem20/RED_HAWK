@@ -5,36 +5,39 @@ function getTitle($url) {
   $title = preg_match('/<title[^>]*>(.*?)<\/title>/ims', $data, $matches) ? $matches[1] : null;
   return $title;
   }
-  function userinput($message){
+function userinput($message){
     global $white, $bold, $greenbg, $redbg, $bluebg, $cln, $lblue, $fgreen;
     $yellowbg = "\e[100m";
     $inputstyle = $cln . $bold . $lblue . "[#] " . $message . ": " . $fgreen ;
   echo $inputstyle;
   }
+
 function WEBserver($urlws){
-  stream_context_set_default( [
+  // Disable SSL peer verification
+  stream_context_set_default([
     'ssl' => [
         'verify_peer' => false,
         'verify_peer_name' => false,
     ],
-]);
+  ]);
+
+  // Get the headers of the URL
   $wsheaders = get_headers($urlws, 1);
-  if (is_array($wsheaders['Server'])) { $ws = $wsheaders['Server'][0];}else{
-    $ws = $wsheaders['Server'];
+
+  // Extract the server information from the headers
+  $ws = is_array($wsheaders['Server']) ? $wsheaders['Server'][0] : $wsheaders['Server'];
+
+  // Output the result
+  if ($ws == "") {
+    echo "\e[91mCould Not Detect\e[0m";
+  } else {
+    echo "\e[92m$ws \e[0m";
   }
-  if ($ws == "")
-    {
-      echo "\e[91mCould Not Detect\e[0m";
-    }
-  else
-    {
-      echo "\e[92m$ws \e[0m";
-    }
 }
 
 
 function WAF_Detect($domains){
-  $response = json_decode(file_get_contents('http://webeye.deta.dev/waf/?q=' . $domains), true);
+  $response = json_decode(readcontents('https://webeye.deta.dev/waf/?q=' . $domains), true);
   if ($response['waf']){
     $arr = $response["manufacturer"];
     if (is_array($arr)){
@@ -52,14 +55,10 @@ function WAF_Detect($domains){
 function cloudflaredetect($reallink){
 
   $headers = get_headers($reallink, true)['Server'];
-  if (is_string($headers) == "cloudflare") {
+  if ($headers == "cloudflare") {
     echo "\e[91mDetected\n\e[0m";
   }
-  elseif (in_array('cloudflare', $headers)){
-      echo "\e[91mDetected\n\e[0m";
-    }
-  else
-    {
+  else{
       echo "\e[92mNot Detected\n\e[0m";
     }
 }
@@ -106,32 +105,42 @@ function CMSdetect($reallink){
     }
     return $tcms;
 }
+
+function getFinalUrl($url) {
+  $ch = curl_init($url);
+  curl_setopt_array($ch, [
+    CURLOPT_HEADER => true,
+    CURLOPT_FOLLOWLOCATION => true,
+    CURLOPT_RETURNTRANSFER => true,
+  ]);
+  $response = curl_exec($ch);
+  $finalUrl = curl_getinfo($ch, CURLINFO_EFFECTIVE_URL);
+  curl_close($ch);
+  return $finalUrl;
+}
+
 function robotsdottxt($reallink){
-  $rbturl    = $reallink . "/robots.txt";
+  $rbturl = getFinalUrl($reallink) . "robots.txt";
   $rbthandle = curl_init($rbturl);
-  curl_setopt($rbthandle, CURLOPT_SSL_VERIFYPEER, false);
-  curl_setopt($rbthandle, CURLOPT_RETURNTRANSFER, TRUE);
+  curl_setopt_array($rbthandle, [
+    CURLOPT_SSL_VERIFYPEER => false,
+    CURLOPT_RETURNTRANSFER => true
+  ]);
   $rbtresponse = curl_exec($rbthandle);
   $rbthttpCode = curl_getinfo($rbthandle, CURLINFO_HTTP_CODE);
-  if ($rbthttpCode == 200)
-    {
-      $rbtcontent = readcontents($rbturl);
-      if ($rbtcontent == "")
-        {
-          echo "Found But Empty!";
-        }
-      else
-        {
-          echo "\e[92mFound \e[0m\n";
-          echo "\e[36m\n-------------[ contents ]----------------  \e[0m\n";
-          echo $rbtcontent;
-          echo "\e[36m\n-----------[end of contents]-------------\e[0m";
-        }
+  if ($rbthttpCode == 200) {
+    $rbtcontent = readcontents($rbturl);
+    if ($rbtcontent == "") {
+      echo "Found But Empty!";
+    } else {
+      echo "\e[92mFound \e[0m\n";
+      echo "\e[36m\n-------------[ contents ]----------------  \e[0m\n";
+      echo $rbtcontent;
+      echo "\e[36m\n-----------[end of contents]-------------\e[0m";
     }
-  else
-    {
-      echo "\e[91mCould NOT Find robots.txt! \e[0m\n";
-    }
+  } else {
+    echo "\e[91mCould NOT Find robots.txt! \e[0m\n";
+  }
 }
 function gethttpheader($reallink){
   $hdr = get_headers($reallink);
@@ -370,4 +379,5 @@ function bv_moz_info($url){
   	echo $bold . $lblue . "[i] Page Authority : " . $fgreen . $resObj->{'upa'} . "\n";
   }
 }
+
 ?>
