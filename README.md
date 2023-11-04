@@ -53,6 +53,7 @@ All in one tool for **Information Gathering** and **Vulnerability Scanning**
     - Version 2.0.0 [11-08-2017]
 	- Version 2.1.0 [23-05-2022]
 	- Version 2.1.3 [02-11-2022]
+	- Version 2.1.4 [04-11-2023]
 
 # Changelog:
 - Version 1.0.0
@@ -81,6 +82,10 @@ All in one tool for **Information Gathering** and **Vulnerability Scanning**
 - Version 2.1.3
 	- `Bugs Fixed (Nmap, Whois, WAF)` Fixed 
 	- `Changes in API` Improved	
+- Version 2.1.4
+	- `Bugs Fixed (WAF Detection, Cloudflare Detection)` Fixed
+	- `Robots.txt Detection` Improved
+	- `Code Readability` Improved
 
 # Installation:
 1. Run The Tool and Type `fix` This will Install All Required Modules.
